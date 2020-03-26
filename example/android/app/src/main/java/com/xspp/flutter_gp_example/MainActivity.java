@@ -7,7 +7,12 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 
 
-import io.flutter.app.FlutterActivity;
+import androidx.annotation.NonNull;
+
+import java.nio.channels.Channel;
+
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -16,23 +21,14 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 
 public class MainActivity extends FlutterActivity {
-//  @Override
-//  public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
-//    GeneratedPluginRegistrant.registerWith(flutterEngine);
-//  }
-
   private static final String BATTERY_CHANNEL = "com.allword.flutter/event";
   private static final  String CHANNAL = "flutter_plugin_google";
   String guid = "吹牛逼";
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+    GeneratedPluginRegistrant.registerWith(flutterEngine);
     getGuid();
-    //FlutterEventChannel.create(getFlutterView());
-   // GeneratedPluginRegistrant.registerWith(this);
-
-
-    new MethodChannel(getFlutterView(),CHANNAL).setMethodCallHandler( new MethodChannel.MethodCallHandler(){
+    new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNAL).setMethodCallHandler(new MethodChannel.MethodCallHandler(){
 
       @Override
       public void onMethodCall(MethodCall call, MethodChannel.Result result) {
@@ -43,41 +39,61 @@ public class MainActivity extends FlutterActivity {
         }
       }
     });
-
-  //  GeneratedPluginRegistrant.registerWith(this);
-
-
-
-
-
-
-
-
-
-
-
-    new EventChannel(getFlutterView(), BATTERY_CHANNEL).setStreamHandler(
-            new EventChannel.StreamHandler() {
-              private BroadcastReceiver chargingStateChangeReceiver;
-              @Override
-              public void onListen(Object args, final EventChannel.EventSink events) {
-                chargingStateChangeReceiver = createChargingStateChangeReceiver(events);
-                registerReceiver(
-                        chargingStateChangeReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-                // Log.w(TAG, "adding listener");
-              }
-
-              @Override
-              public void onCancel(Object args) {
-                unregisterReceiver(chargingStateChangeReceiver);
-                chargingStateChangeReceiver = null;
-                // Log.w(TAG, "cancelling listener");
-              }
-            }
-    );
   }
-
-
+//  @Override
+//  public void onCreate(Bundle savedInstanceState) {
+//    super.onCreate(savedInstanceState);
+//    getGuid();
+//    //FlutterEventChannel.create(getFlutterView());
+//    // GeneratedPluginRegistrant.registerWith(this);
+//
+//
+////    new MethodChannel(getFlutterView(),CHANNAL).setMethodCallHandler( new MethodChannel.MethodCallHandler(){
+////
+////      @Override
+////      public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+////
+////        if(call.method.equals("getGuId")){
+////
+////          result.success(guid);
+////        }
+////      }
+////    });
+////
+////  //  GeneratedPluginRegistrant.registerWith(this);
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////
+////    new EventChannel(getFlutterView(), BATTERY_CHANNEL).setStreamHandler(
+////            new EventChannel.StreamHandler() {
+////              private BroadcastReceiver chargingStateChangeReceiver;
+////              @Override
+////              public void onListen(Object args, final EventChannel.EventSink events) {
+////                chargingStateChangeReceiver = createChargingStateChangeReceiver(events);
+////                registerReceiver(
+////                        chargingStateChangeReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+////                // Log.w(TAG, "adding listener");
+////              }
+////
+////              @Override
+////              public void onCancel(Object args) {
+////                unregisterReceiver(chargingStateChangeReceiver);
+////                chargingStateChangeReceiver = null;
+////                // Log.w(TAG, "cancelling listener");
+////              }
+////            }
+////    );
+////  }
+//
+//  }
   public void getGuid(){
     new Thread(new Runnable() {
       String advertisingId;
