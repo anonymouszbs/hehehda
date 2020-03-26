@@ -18,7 +18,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
-
+import io.flutter.embedding.android.FlutterActivity;
 
 public class MainActivity extends FlutterActivity {
   private static final String BATTERY_CHANNEL = "com.allword.flutter/event";
@@ -28,16 +28,15 @@ public class MainActivity extends FlutterActivity {
   public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
     GeneratedPluginRegistrant.registerWith(flutterEngine);
     getGuid();
-    new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNAL).setMethodCallHandler(new MethodChannel.MethodCallHandler(){
+    new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNAL).setMethodCallHandler((MethodCall call, MethodChannel.Result result) ->{
 
-      @Override
-      public void onMethodCall(MethodCall call, MethodChannel.Result result) {
+
 
         if(call.method.equals("getGuId")){
 
           result.success(guid);
         }
-      }
+
     });
   }
 //  @Override
