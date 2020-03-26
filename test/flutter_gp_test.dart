@@ -17,7 +17,7 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
+  test('flutter_plugin_google', () async {
     expect(await FlutterGp.getGuId, '42');
   });
 }

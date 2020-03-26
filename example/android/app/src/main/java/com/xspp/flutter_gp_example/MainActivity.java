@@ -27,24 +27,24 @@ public class MainActivity extends FlutterActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-   // getGuid();
+    getGuid();
     //FlutterEventChannel.create(getFlutterView());
    // GeneratedPluginRegistrant.registerWith(this);
 
 
-//    new MethodChannel(getFlutterView(),CHANNAL).setMethodCallHandler( new MethodChannel.MethodCallHandler(){
-//
-//      @Override
-//      public void onMethodCall(MethodCall call, MethodChannel.Result result) {
-//
-//        if(call.method.equals("getGuId")){
-//
-//          result.success(guid);
-//        }
-//      }
-//    });
+    new MethodChannel(getFlutterView(),CHANNAL).setMethodCallHandler( new MethodChannel.MethodCallHandler(){
 
+      @Override
+      public void onMethodCall(MethodCall call, MethodChannel.Result result) {
 
+        if(call.method.equals("getGuId")){
+
+          result.success(guid);
+        }
+      }
+    });
+
+  //  GeneratedPluginRegistrant.registerWith(this);
 
 
 
